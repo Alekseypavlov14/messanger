@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "build-server": "webpack",
-    "dev": "nodemon index.js"
+    "dev": "npm start --prefix client && nodemon index.js",
+    "test-production": "npm run build --prefix client && nodemon index.js"
   },
   "keywords": [
     "react",

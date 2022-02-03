@@ -1,6 +1,7 @@
 const express = require('express')
 const config = require('config')
 const path = require('path')
+const res = require('express/lib/response')
 
 // getting port
 const PORT = config.get('port') || 20022
@@ -15,9 +16,11 @@ app.get('/', (req, res) => {
 // getting static files (css, js, media)
 app.use('/static', express.static(path.resolve(__dirname, 'client', 'build', 'static')))
 
-// getting manifest.json
-app.get('/manifest.json', (req, res) => {
-    res.sendFile( path.resolve(__dirname, 'client', 'build', 'manifest.json') )
+// getting other public files
+app.get('/:file', (req, res) => {
+    if ( /.(png|jpeg|jpg|ico|json|txt)$/.test(req.url) ){
+        res.sendFile( path.resolve(__dirname, 'client', 'build', req.params.file) )
+    }
 })
 
 app.listen(PORT, () => {
