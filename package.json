@@ -5,9 +5,11 @@
   "main": "./dist/index.js",
   "scripts": {
     "start": "node index.js",
+    "build-client": "npm run build --prefix client",
     "build-server": "webpack",
-    "dev": "npm start --prefix client && nodemon index.js",
-    "test-production": "npm run build --prefix client && nodemon index.js"
+    "server": "nodemon index.js",
+    "dev": "npm run build-client && npm run server",
+    "production": "npm run build-client && nodemon index.js"
   },
   "keywords": [
     "react",
@@ -17,6 +19,8 @@
   "author": "Aleksey Pavlov <aleshapavlov9@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "config": "^3.3.7",
     "express": "^4.17.2"
   },
