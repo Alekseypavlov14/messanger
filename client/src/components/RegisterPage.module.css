@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap');
+
+.LoginPage{
+    width: 100%;
+    min-height: 100vh;
+    height: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: url('/public/files/new-york-red-cut.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.container{
+    width: 90%;
+    font-family: 'Source Sans Pro', sans-serif;
+    height: auto;
+    border-radius: 1rem;
+    background: transparent;
+    backdrop-filter: blur(70px);
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 5px 5px #222,
+                0px 0px 15px 3px #222,
+                0px 0px 25px 5px #222,
+                0px 0px 40px 5px #222,
+                0px 0px 60px 15px #222;
+}
+
+.headline{
+    letter-spacing: 2px;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    margin-top: 5px;
+    font-size: 30px;
+    color: #eee;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.inputLabel{
+    font-size: 20px;
+    color: red;
+    display: block;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+.input {
+    border: none;
+    color: #eee;
+    font-size: 16px;
+    margin-bottom: 40px;
+    width: 100%;
+    color: #ddd;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 14px;
+    padding-left: 10px;
+    height: 28px;
+}
+
+.input::placeholder{
+    color: #bbb;
+    font-size: 16px;
+}
+
+.input:focus{
+    outline: none;
+    color: #bbb;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.input.invalid::placeholder, .input.invalid{
+    color: rgb(252, 74, 74);
+}
+
+.row{
+    margin-bottom: 16px;
+    width: 90%;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+}
+
+.button{
+    width: 180px;
+    height: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 18px;
+    font-weight: 200;
+    letter-spacing: 2px;
+    color: #eee;
+    border: none;
+}
+
+.button:focus{
+    outline: none;
+}
+
+.footerText{
+    color: #bbb;
+    font-size: 18px;
+}
+
+.link{
+    margin-bottom: 10px;
+    margin: 0px auto 10px auto;
+    text-decoration: none;
+    text-align: center;
+    color: #ddd;
+    font-weight: 600;
+}
+
+.link:hover{
+    cursor: pointer;
+}
+
+.link:focus{
+    outline: none;
+}
