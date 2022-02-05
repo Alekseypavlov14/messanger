@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 const router = Router()
 
-router.post('/login', bodyParser.json(), async (req, res) => {
+router.post('/register', bodyParser.json(), async (req, res) => {
     const data = req.body
 
     const login = await bcrypt.hash(data.login, 7)
