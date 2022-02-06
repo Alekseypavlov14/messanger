@@ -81,7 +81,7 @@ const LoginPage = () => {
                 <hr className={styles.row} />
 
                 <span className={styles.footerText}>
-                    Have an account? &nbsp;
+                    Don`t have an account? &nbsp;
                     <a
                         href='/register' 
                         className={styles.link}
