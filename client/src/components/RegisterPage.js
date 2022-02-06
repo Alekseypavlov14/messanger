@@ -2,7 +2,7 @@ import React, { useEffect, useState,useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './RegisterPage.module.css'
 import loginUser from '../authentication/register'
-import valid from '../authentication/validation'
+import { valid } from '../authentication/validation'
 
 const RegisterPage = () => {
     const navigate = useNavigate()
@@ -86,13 +86,17 @@ const RegisterPage = () => {
                     type='submit'
                     className={styles.button}
                     onClick={() => {
-                        if ( valid(login, password) ) {
+                        if ( valid.login(login) &&  valid.password(password) ) {
                             loginUser(login, password).then(() => {
                                 navigate('/home')
                             })
                         } else {
-                            loginInputRef.current.classList.add(styles.invalid)
-                            passwordInputRef.current.classList.add(styles.invalid)
+                            if ( !valid.login(login) ) {
+                                loginInputRef.current.classList.add(styles.invalid)
+                            }
+                            if ( !valid.password(password) ) {
+                                passwordInputRef.current.classList.add(styles.invalid)
+                            }
                         }
                     }}
                 >

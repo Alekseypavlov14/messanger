@@ -1,12 +1,20 @@
-function valid(login, password) {
-    const loginResult = !!(login?.length >= 4)
-    const passwordResult = !!(password?.length >= 6)
-
-    if (loginResult && passwordResult) {
+function validLogin(login) {
+    if (login?.length >= 4) {
         return true
     }
 
     return false
 }
 
-export default valid
+function validPassword(password) {
+    if (password?.length >= 6) {
+        return true
+    }
+
+    return false
+}
+
+export const valid = {
+    login: validLogin,
+    password: validPassword
+}
