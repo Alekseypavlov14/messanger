@@ -23,7 +23,8 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "config": "^3.3.7",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mongoose": "^6.2.0"
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
