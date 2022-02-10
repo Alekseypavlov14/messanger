@@ -1,10 +1,13 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './LoginPage.module.css'
 import { valid } from '../authentication/validation'
+import { NotificationContext } from '../context/context'
+import loginUser from './../authentication/login'
 
 const LoginPage = () => {
     const navigate = useNavigate()
+    const { addNotify } = useContext(NotificationContext)
 
     const [login, setLogin] = useState(null)
     const [password, setPassword] = useState(null)
@@ -52,7 +55,7 @@ const LoginPage = () => {
                         id='passwordInput' 
                         autoComplete='off' 
                         placeholder='password...'
-                        type='text' 
+                        type='password' 
                         ref={passwordRef}
                         onChange={(e) => {
                             setPassword(e.target.value)
@@ -68,7 +71,22 @@ const LoginPage = () => {
                     className={styles.button}
                     onClick={() => {
                         if ( valid.login(login) && valid.password(password) ) {
-                            // register user
+                            loginUser(login, password)
+                                .then(data => {
+                                    if ( data.login && data.password ){
+                                        localStorage.setItem('login', data.login)
+                                        localStorage.setItem('password', data.password)
+                                    }
+                                    if (data.message) {
+                                        addNotify(data.message)
+                                    }
+                                })
+                                .then(() => {
+                                    navigate('/home')
+                                })
+                                .catch(e => {
+                                    console.error(e)
+                                })
                         } else {
                             if ( !valid.login(login) ) loginRef.current.classList.add(styles.invalid)
                             if ( !valid.password(password) ) passwordRef.current.classList.add(styles.invalid)

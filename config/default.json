@@ -1,3 +1,4 @@
 {
-    "port": 20022
+    "port": 20022,
+    "db": "mongodb+srv://aleksey:messager2022@messager.noce0.mongodb.net/messager?retryWrites=true&w=majority"
 }

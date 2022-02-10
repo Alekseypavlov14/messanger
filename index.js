@@ -2,6 +2,15 @@ const express = require('express')
 const config = require('config')
 const path = require('path')
 const bcrypt = require('bcryptjs')
+const mongoose = require('mongoose')
+
+const db = config.get('db') || 'mongodb+srv://aleksey:messager2022@messager.noce0.mongodb.net/messager?retryWrites=true&w=majority'
+
+mongoose.connect(
+    db, 
+    { useUnifiedTopology: true, useNewUrlParser: true },
+    () => console.log('Connected with DB')
+)
 
 // getting port
 const PORT = config.get('port') || 20022
@@ -34,6 +43,8 @@ app.get('/home', (req, res) => {
 })
 
 app.use('/server', require('./routes/account.routes'))
+
+app.use('/message', require('./routes/message.routes'))
 
 app.listen(PORT, () => {
     console.log(`Server is working on port ${PORT}`)

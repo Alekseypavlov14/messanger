@@ -1,5 +1,5 @@
-async function register(login, password) {
-    return fetch('/server/register', {
+async function login(login, password) {
+    return fetch('/server/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -13,4 +13,4 @@ async function register(login, password) {
     })
 }
 
-export default register
+export default login

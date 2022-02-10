@@ -15,7 +15,19 @@ const HomePage = () => {
     
     return (
         <div>
-            <h1>Home Page</h1>
+            <a href='/message/contacts' 
+            onClick={(e) => {
+                e.preventDefault()
+
+                fetch('/message/contacts', {
+                    method: 'POST'
+                }).then(res => {
+                    return res.json()
+                }).then(data => {
+                    console.log(data)
+                })
+            }}
+            >Send</a>
         </div>
     )
 }

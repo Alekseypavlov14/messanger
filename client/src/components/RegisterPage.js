@@ -1,10 +1,12 @@
-import React, { useEffect, useState,useRef } from 'react'
+import React, { useEffect, useState,useRef, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './RegisterPage.module.css'
-import loginUser from '../authentication/register'
+import registerUser from '../authentication/register'
 import { valid } from '../authentication/validation'
+import { NotificationContext } from '../context/context'
 
 const RegisterPage = () => {
+    const { addNotify } = useContext(NotificationContext)
     const navigate = useNavigate()
 
     const [login, setLogin] = useState(null)
@@ -87,9 +89,22 @@ const RegisterPage = () => {
                     className={styles.button}
                     onClick={() => {
                         if ( valid.login(login) &&  valid.password(password) ) {
-                            loginUser(login, password).then(() => {
-                                navigate('/home')
-                            })
+                            registerUser(login, password)
+                                .then(data => {
+                                    if ( data.login && data.password ){
+                                        localStorage.setItem('login', data.login)
+                                        localStorage.setItem('password', data.password)
+                                    }
+                                    else {
+                                        addNotify(data.message)
+                                    }
+                                })
+                                .then(() => {
+                                    navigate('/home')
+                                })
+                                .catch(e => {
+                                    console.error(e)
+                                })
                         } else {
                             if ( !valid.login(login) ) {
                                 loginInputRef.current.classList.add(styles.invalid)
