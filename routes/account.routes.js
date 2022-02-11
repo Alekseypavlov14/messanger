@@ -9,14 +9,14 @@ router.post('/register', bodyParser.json(), async (req, res) => {
     const data = req.body
 
     // hashed login and password
-    const login = await bcrypt.hash(data.login, 7)
+    const login = data.login
     const password = await bcrypt.hash(data.password, 7)
 
     // get all users
     const users = await User.find({})
     // filter by login
     const candidates = users.filter(user => {
-        return bcrypt.compareSync(data.login, user.login)
+        return login === user.login
     })
 
     if (candidates.length > 0) {
@@ -48,7 +48,7 @@ router.post('/login', bodyParser.json(), async (req, res) => {
 
     // filter by login and password
     const candidates = users.filter(user => (
-        bcrypt.compareSync(data.login, user.login) &&
+        data.login === user.login &&
         bcrypt.compareSync(data.password, user.password)
     ))
 

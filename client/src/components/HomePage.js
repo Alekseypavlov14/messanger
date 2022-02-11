@@ -14,9 +14,6 @@ const HomePage = () => {
         }
     }, [navigate])
 
-    const user = JSON.parse( localStorage.getItem('user') )
-    const contacts = user.contacts
-    
     return (
         <div>
             <HomeHeader />
