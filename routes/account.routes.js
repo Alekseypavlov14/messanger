@@ -36,7 +36,7 @@ router.post('/register', bodyParser.json(), async (req, res) => {
     res.json({
         login: login,
         password: password,
-        user: savedUser
+        user: JSON.stringify(savedUser)
     })
 })
 
@@ -63,7 +63,7 @@ router.post('/login', bodyParser.json(), async (req, res) => {
     return res.json({
         login: foundUser.login,
         password: foundUser.password,
-        user: foundUser
+        user: JSON.stringify(foundUser)
     })
 })
 

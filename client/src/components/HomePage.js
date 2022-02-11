@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import HomeHeader from './HomeHeader'
 
 const HomePage = () => {
     const navigate = useNavigate()
@@ -12,22 +13,13 @@ const HomePage = () => {
             navigate('/register')
         }
     }, [navigate])
+
+    const user = JSON.parse( localStorage.getItem('user') )
+    const contacts = user.contacts
     
     return (
         <div>
-            <a href='/message/contacts' 
-            onClick={(e) => {
-                e.preventDefault()
-
-                fetch('/message/contacts', {
-                    method: 'POST'
-                }).then(res => {
-                    return res.json()
-                }).then(data => {
-                    console.log(data)
-                })
-            }}
-            >Send</a>
+            <HomeHeader />
         </div>
     )
 }

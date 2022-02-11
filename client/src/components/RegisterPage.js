@@ -94,6 +94,7 @@ const RegisterPage = () => {
                                     if ( data.login && data.password ){
                                         localStorage.setItem('login', data.login)
                                         localStorage.setItem('password', data.password)
+                                        localStorage.setItem('user', data.user)
                                     }
                                     else {
                                         addNotify(data.message)
