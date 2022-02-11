@@ -76,13 +76,12 @@ const LoginPage = () => {
                                     if ( data.login && data.password ){
                                         localStorage.setItem('login', data.login)
                                         localStorage.setItem('password', data.password)
+
+                                        navigate('/home')
                                     }
                                     if (data.message) {
                                         addNotify(data.message)
                                     }
-                                })
-                                .then(() => {
-                                    navigate('/home')
                                 })
                                 .catch(e => {
                                     console.error(e)

@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.b140f29d.css",
-    "main.js": "/static/js/main.39011d8f.js",
+    "main.css": "/static/css/main.6a3d2551.css",
+    "main.js": "/static/js/main.5e6fed9b.js",
     "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
     "static/media/new-york-red-cut.jpg": "/static/media/new-york-red-cut.e6cef2a97ce0fdb876dc.jpg",
+    "static/media/night-new-york-cut-shorted.jpg": "/static/media/night-new-york-cut-shorted.c2e5fec701dfa15508bb.jpg",
     "index.html": "/index.html",
-    "main.b140f29d.css.map": "/static/css/main.b140f29d.css.map",
-    "main.39011d8f.js.map": "/static/js/main.39011d8f.js.map",
+    "main.6a3d2551.css.map": "/static/css/main.6a3d2551.css.map",
+    "main.5e6fed9b.js.map": "/static/js/main.5e6fed9b.js.map",
     "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b140f29d.css",
-    "static/js/main.39011d8f.js"
+    "static/css/main.6a3d2551.css",
+    "static/js/main.5e6fed9b.js"
   ]
 }

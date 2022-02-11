@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const bodyParser = require('body-parser')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const User = require('./../models/User')
 
 const router = Router()
@@ -8,11 +8,16 @@ const router = Router()
 router.post('/register', bodyParser.json(), async (req, res) => {
     const data = req.body
 
+    // hashed login and password
     const login = await bcrypt.hash(data.login, 7)
     const password = await bcrypt.hash(data.password, 7)
 
+    // get all users
     const users = await User.find({})
-    const candidates = users.filter(user => bcrypt.compare(login, user.login))
+    // filter by login
+    const candidates = users.filter(user => {
+        return bcrypt.compareSync(data.login, user.login)
+    })
 
     if (candidates.length > 0) {
         return res.json({
@@ -26,33 +31,30 @@ router.post('/register', bodyParser.json(), async (req, res) => {
         contacts: []
     })
 
-    user
-        .save()
-        .then(savedUser => {
-            res.json({
-                login: login,
-                password: password,
-                user: savedUser
-            })
-        })
-        .catch(e => console.log(e))
+    const savedUser = await user.save()
+    
+    res.json({
+        login: login,
+        password: password,
+        user: savedUser
+    })
 })
 
 router.post('/login', bodyParser.json(), async (req, res) => {
     const data = req.body
 
-    const login = await bcrypt.hash(data.login, 7)
-    const password = await bcrypt.hash(data.password, 7)
-
+    // get all users
     const users = await User.find({})
+
+    // filter by login and password
     const candidates = users.filter(user => (
-        bcrypt.compare(login, user.login) &&
-        bcrypt.compare(password, user.password)
+        bcrypt.compareSync(data.login, user.login) &&
+        bcrypt.compareSync(data.password, user.password)
     ))
 
     if (candidates.length == 0) {
         return res.json({
-            message: 'There is no such account'
+            message: 'Incorrect login or password'
         })
     }
 
