@@ -76,7 +76,7 @@ const LoginPage = () => {
                                     if ( data.login && data.password ){
                                         localStorage.setItem('login', data.login)
                                         localStorage.setItem('password', data.password)
-                                        localStorage.setItem('user', data.user)
+                                        localStorage.setItem('contacts', data.contacts)
 
                                         navigate('/home')
                                     }

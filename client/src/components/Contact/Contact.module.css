@@ -1,0 +1,10 @@
+.Contact{
+    height: 50px;
+    width: 96%;
+    border: 1px solid black;
+    box-sizing: border-box;
+    line-height: 46px;
+    border-radius: 1rem;
+    padding-left: 10px;
+    margin-top: 10px;
+}
