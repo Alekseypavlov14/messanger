@@ -3,13 +3,15 @@ import styles from './MainPage.module.css'
 import HomeHeader from './HomeHeader'
 import Contact from '../Contact/Contact'
 
-const MainPage = ({ AddContact, contacts }) => {
+const MainPage = ({ setPageIndex, contacts, removeContact }) => {
     return (
         <div className={styles.MainPage}>
-            <HomeHeader AddContact={AddContact}/>
-            {contacts.map((contact, index) => (
-                <Contact name={contact.login} key={index} />
-            ))}
+            <HomeHeader setPageIndex={setPageIndex} />
+            <div className={styles.ContactsBox}>
+                {contacts.map((contact, index) => (
+                    <Contact login={contact.login} key={index} setPageIndex={setPageIndex} removeContact={removeContact} />
+                ))}
+            </div>
         </div>
     )
 }

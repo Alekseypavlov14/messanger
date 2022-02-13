@@ -1,22 +1,19 @@
 import React from 'react'
 import styles from './HomeHeader.module.css'
 
-const HomeHeader = ({ AddContact }) => {
+const HomeHeader = ({ setPageIndex }) => {
     return (
-        <div className={styles.HomeHeader}>
+        <header className={styles.HomeHeader}>
             <span className={styles.Title}>
                 Messager
             </span>
             <button 
                 className={styles.AddContact}
-                onClick={() => AddContact({
-                    login: 'Hello',
-                    messages: []
-                })}
+                onClick={() => setPageIndex(1)}
             >
                +
             </button>
-        </div>
+        </header>
     )
 }
 

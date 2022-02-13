@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ActiveChatPage from './ActiveChatPage/ActiveChatPage'
+import AddContactPage from './AddContactPage/AddContactPage'
 import MainPage from './MainPage/MainPage'
 
 const HomePage = () => {
@@ -39,9 +41,21 @@ const HomePage = () => {
         setContacts(prev => [contact].concat(prev))
     }
 
+    function removeContact(login) {
+        setContacts(prev => prev.filter(contact => contact.login !== login))
+    }
+
+    const [pageIndex, setPageIndex] = useState(0)
+
+    const pages = [
+        (<MainPage removeContact={removeContact} setPageIndex={setPageIndex} contacts={contacts} />),
+        (<AddContactPage setPageIndex={setPageIndex} AddContact={AddContact} />),
+        (<ActiveChatPage  setPageIndex={setPageIndex} />)
+    ]
+
     return (
         <div>
-            <MainPage AddContact={AddContact} contacts={contacts} />
+            {pages[pageIndex]}
         </div>
     )
 }

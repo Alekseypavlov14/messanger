@@ -42,9 +42,23 @@ app.get('/home', (req, res) => {
     res.sendFile( path.join(__dirname, 'client', 'build', 'index.html') )
 })
 
+app.get('/home/main', (req, res) => {
+    res.sendFile( path.join(__dirname, 'client', 'build', 'index.html') )
+})
+
+app.get('/home/add', (req, res) => {
+    res.sendFile( path.join(__dirname, 'client', 'build', 'index.html') )
+})
+
+app.get('/home/chat', (req, res) => {
+    res.sendFile( path.join(__dirname, 'client', 'build', 'index.html') )
+})
+
 app.use('/server', require('./routes/account.routes'))
 
 app.use('/message', require('./routes/message.routes'))
+
+app.use('/contacts', require('./routes/contacts.routes'))
 
 app.listen(PORT, () => {
     console.log(`Server is working on port ${PORT}`)
