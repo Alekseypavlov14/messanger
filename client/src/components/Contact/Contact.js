@@ -1,21 +1,26 @@
 import React from 'react'
 import styles from './Contact.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
-const Contact = ({ login, setPageIndex, removeContact }) => {
+const Contact = ({ contact, login, setPageIndex, removeContact, setActiveChat }) => {
     return (
-        <div className={styles.Contact}>
+        <div 
+            className={styles.Contact}
+            onClick={(e) => {
+                if (e.target.tagName === 'DIV'){
+                    setActiveChat(contact)
+                    setPageIndex(2)
+                }
+            }}
+        >
             { login }
 
-            <button onClick={() => {
-                setPageIndex(2)
-            }}>
-                open
-            </button>
-
-            <button onClick={() => {
-                removeContact(login)
-            }}>
-                remove
+            <button 
+                onClick={() => removeContact(login)}
+                className={styles.RemoveButton}
+            >
+                <FontAwesomeIcon className={styles.Icon} icon={faTrashCan} />
             </button>
         </div>
     )

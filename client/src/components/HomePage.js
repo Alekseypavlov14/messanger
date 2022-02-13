@@ -35,6 +35,18 @@ const HomePage = () => {
         if (!login || !password) return
 
         localStorage.setItem('contacts', JSON.stringify(contacts))
+
+        // save all contacts
+        fetch('/contacts/save', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                login: login,
+                contacts: contacts
+            })
+        })
     }, [contacts])
 
     function AddContact(contact) {
@@ -47,10 +59,13 @@ const HomePage = () => {
 
     const [pageIndex, setPageIndex] = useState(0)
 
+    // chat = contact = {name: string, messages = []}
+    const [activeChat, setActiveChat] = useState(null)
+
     const pages = [
-        (<MainPage removeContact={removeContact} setPageIndex={setPageIndex} contacts={contacts} />),
+        (<MainPage setActiveChat={setActiveChat} removeContact={removeContact} setPageIndex={setPageIndex} contacts={contacts} />),
         (<AddContactPage setPageIndex={setPageIndex} AddContact={AddContact} />),
-        (<ActiveChatPage  setPageIndex={setPageIndex} />)
+        (<ActiveChatPage activeChat={activeChat} setPageIndex={setPageIndex} />)
     ]
 
     return (

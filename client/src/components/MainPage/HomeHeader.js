@@ -11,7 +11,7 @@ const HomeHeader = ({ setPageIndex }) => {
                 className={styles.AddContact}
                 onClick={() => setPageIndex(1)}
             >
-               +
+                +
             </button>
         </header>
     )

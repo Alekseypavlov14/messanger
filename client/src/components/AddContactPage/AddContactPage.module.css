@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Red+Hat+Mono:300,regular,500,600,700,300italic,italic,500italic,600italic,700italic);
 
 .header{
     width: 100%;
     height: 60px;
-    background: rgb(154, 253, 154);
+    background: linear-gradient(135deg, rgb(162, 246, 168) 29%, rgb(183, 249, 144) 88%);
     font-size: 22px;
-    font-family: 'Shrikhand', cursive;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
     padding: 15px;
+    border-bottom: 1px solid #ddd;
 }
 
 .ExitButton{
@@ -30,7 +33,39 @@
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    height: 40px;
-    margin: 10px 0px;
     box-sizing: border-box;
+    margin: 20px 0px;
+}
+
+.CandidatesBox{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login{
+    width: 90%;
+    height: 36px;
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    border-radius: 9px;
+    outline: none;
+    background: #eee;
+    border: none;
+    padding-left: 10px;
+}
+
+.Candidate{
+    width: 90%;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    margin-top: 10px;
+    box-sizing: border-box;
+    line-height: 36px;
+    font-size: 20px;
+    font-family: 'Red Hat Mono', serif;
+    padding-left: 10px;
 }

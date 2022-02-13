@@ -1,5 +1,7 @@
 function validLogin(login) {
-    if (login?.length >= 4) {
+    if (
+        /\w{4,}/.test(login)
+    ) {
         return true
     }
 
@@ -7,7 +9,9 @@ function validLogin(login) {
 }
 
 function validPassword(password) {
-    if (password?.length >= 6) {
+    if (
+        /\w{6,}/.test(password)
+    ) {
         return true
     }
 
