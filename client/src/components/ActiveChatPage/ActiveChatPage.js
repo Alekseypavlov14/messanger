@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from './ActiveChatPage.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 
 const ActiveChatPage = ({ setPageIndex, activeChat }) => {
     const [currentMessage, setCurrentMessage] = useState('')
+
+    const TextAreaRef = useRef(null)
 
     function sendMessage() {
         fetch('/message/send', {
@@ -21,10 +23,30 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
             })
         }).then(response => {
             return response.json()
-        }).then(data => {
-            console.log(data)
+        }).then(() => {
+            TextAreaRef.current.value = ''
+            setCurrentMessage('')
         })
     }
+
+    const [messages, setMessages] = useState([])
+
+    useEffect(() => {
+        fetch('/message/get-by-login', {
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                user: localStorage.getItem('login'),
+                contact: activeChat.login
+            })
+        }).then(res => {
+            return res.json()
+        }).then(data => {
+            setMessages(data.messages)
+        })
+    }, [currentMessage])
 
     return (
         <div className={styles.ActiveChatPage}>
@@ -44,11 +66,14 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
             </header>
 
             <div className={styles.Messages}>
-                {currentMessage}
+                {messages.map((message, index) => (
+                    <div key={index}>{message.text}</div>
+                ))}
             </div>
 
             <div className={styles.WriteMessageBox}>
                 <textarea 
+                    ref={TextAreaRef}
                     wrap='soft' 
                     className={styles.Input}
                     onChange={(e) => {

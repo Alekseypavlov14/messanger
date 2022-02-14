@@ -31,6 +31,19 @@ const HomePage = () => {
     }, [])
 
     useEffect(() => {
+        fetch('message/get', {
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                login: localStorage.getItem('login'),
+                password: localStorage.getItem('password')
+            })
+        })
+    }, [])
+
+    useEffect(() => {
         // check login and password
         const login = localStorage.getItem('login')
         const password = localStorage.getItem('password')
