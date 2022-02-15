@@ -1,11 +1,8 @@
 const express = require('express')
-const config = require('config')
 const path = require('path')
 const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
 require('dotenv').config()
-
-const db = config.get('db')
 
 mongoose.connect(
     process.env.MONGO_URL, 
