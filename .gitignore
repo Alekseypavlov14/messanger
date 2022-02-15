@@ -1,10 +1,6 @@
 # dependencies
 /node_modules
 
-/config
-config
-.env
-
 # dependencies
 /client/node_modules
 /client/.pnp
