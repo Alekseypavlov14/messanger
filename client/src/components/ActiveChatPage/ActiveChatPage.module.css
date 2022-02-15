@@ -53,6 +53,11 @@
     align-items: center;
 }
 
+.Messages{
+    overflow-y: scroll;
+    padding: 10px 10px 0px 10px;
+}
+
 .Input{
     width: 80%;
     height: 50px;
@@ -60,6 +65,7 @@
     border-radius: 10px;
     border: none;
     box-sizing: border-box;
+    resize: none;
 
     padding-left: 12px;
     font-size: 18px;
@@ -85,7 +91,15 @@
     align-items: center;
 }
 
+.Send:focus, .Send:active{
+    outline: none;
+}
+
 .Icon{
     font-size: 24px;
     color: #fff;
+}
+
+.send{
+    color: red;
 }

@@ -42,7 +42,7 @@ app.get('/home', (req, res) => {
     res.sendFile( path.join(__dirname, 'client', 'build', 'index.html') )
 })
 
-app.get('/home/main', (req, res) => {
+app.get('/home', (req, res) => {
     res.sendFile( path.join(__dirname, 'client', 'build', 'index.html') )
 })
 

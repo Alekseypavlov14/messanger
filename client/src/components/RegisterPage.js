@@ -9,8 +9,8 @@ const RegisterPage = () => {
     const { addNotify } = useContext(NotificationContext)
     const navigate = useNavigate()
 
-    const [login, setLogin] = useState(null)
-    const [password, setPassword] = useState(null)
+    const [login, setLogin] = useState('')
+    const [password, setPassword] = useState('')
     const loginInputRef = useRef(null)
     const passwordInputRef = useRef(null)
 
@@ -88,13 +88,16 @@ const RegisterPage = () => {
                     type='submit'
                     className={styles.button}
                     onClick={() => {
-                        if ( valid.login(login) &&  valid.password(password) ) {
+                        if ( valid.login(login) && valid.password(password) ) {
                             registerUser(login, password)
                                 .then(data => {
                                     if ( data.login && data.password ){
                                         localStorage.setItem('login', data.login)
                                         localStorage.setItem('password', data.password)
                                         localStorage.setItem('contacts', data.contacts)
+
+                                        setLogin('')
+                                        setPassword('')
                                     }
                                     else {
                                         addNotify(data.message)
@@ -107,11 +110,14 @@ const RegisterPage = () => {
                                     console.error(e)
                                 })
                         } else {
-                            if ( !valid.login(login) ) {
-                                loginInputRef.current.classList.add(styles.invalid)
-                            }
+
                             if ( !valid.password(password) ) {
                                 passwordInputRef.current.classList.add(styles.invalid)
+                                console.log(login, password, valid.password(null))
+                            }
+
+                            if ( !valid.login(login) ) {
+                                loginInputRef.current.classList.add(styles.invalid)
                             }
                         }
                     }}

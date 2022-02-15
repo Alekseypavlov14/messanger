@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef } from 'react'
 import styles from './ActiveChatPage.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import Message from '../Message/Message'
 
 const ActiveChatPage = ({ setPageIndex, activeChat }) => {
     const [currentMessage, setCurrentMessage] = useState('')
 
     const TextAreaRef = useRef(null)
+    const MessagesBoxRef = useRef(null)
 
     function sendMessage() {
         fetch('/message/send', {
@@ -19,14 +21,28 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
                 from: localStorage.getItem('login'),
                 to: activeChat.login,
                 text: currentMessage,
-                read: false
+                read: false,
+                send: false
             })
         }).then(response => {
             return response.json()
-        }).then(() => {
-            TextAreaRef.current.value = ''
-            setCurrentMessage('')
+        }).then(data => {
+            if (data.isSaved) {
+                setMessages(prev => {
+                    prev[prev.length - 1].send = true
+                    return prev
+                })
+            }
         })
+    }
+
+    function sortByDate(messages) {
+        // const dates = messages.map(message => new Date(message.time))
+        // console.log(dates)
+
+        // console.log(dates)
+
+        return messages.sort((a, b) => new Date(a.time) - new Date (b.time))
     }
 
     const [messages, setMessages] = useState([])
@@ -44,9 +60,14 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
         }).then(res => {
             return res.json()
         }).then(data => {
-            setMessages(data.messages)
+            return setMessages(sortByDate(data.messages))
         })
-    }, [currentMessage])
+    }, [])
+
+    useEffect(() => {
+        const box = MessagesBoxRef.current
+        box.scrollTop = box.scrollHeight - box.clientHeight
+    }, [messages])
 
     return (
         <div className={styles.ActiveChatPage}>
@@ -65,9 +86,9 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
                 </button>
             </header>
 
-            <div className={styles.Messages}>
+            <div className={styles.Messages} ref={MessagesBoxRef}>
                 {messages.map((message, index) => (
-                    <div key={index}>{message.text}</div>
+                    <Message key={index} message={message} />
                 ))}
             </div>
 
@@ -84,7 +105,22 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
                 <button
                     className={styles.Send}
                     onClick={() => {
+                        if (!(/\S/.test(currentMessage))) {
+                            TextAreaRef.current.value = ''
+                            setCurrentMessage('')
+                            return
+                        }
+
                         sendMessage()
+                        setMessages(prev => prev.concat([{
+                            time: Date.now(),
+                            from: localStorage.getItem('login'),
+                            to: activeChat.login,
+                            text: currentMessage,
+                            read: false
+                        }]))
+                        TextAreaRef.current.value = ''
+                        setCurrentMessage('')
                     }}
                 >
                     <FontAwesomeIcon icon={faPaperPlane} className={styles.Icon} />

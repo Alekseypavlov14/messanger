@@ -9,8 +9,8 @@ const LoginPage = () => {
     const navigate = useNavigate()
     const { addNotify } = useContext(NotificationContext)
 
-    const [login, setLogin] = useState(null)
-    const [password, setPassword] = useState(null)
+    const [login, setLogin] = useState('')
+    const [password, setPassword] = useState('')
 
     const loginRef = useRef(null)
     const passwordRef = useRef(null)

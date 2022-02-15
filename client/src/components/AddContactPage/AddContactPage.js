@@ -64,7 +64,7 @@ const AddContactPage = ({ AddContact, setPageIndex }) => {
                                     const contacts = JSON.parse(localStorage.getItem('contacts'))
                                     const duplicates = contacts.filter(contact => contact.login === candidate.login)
                                     if (duplicates.length === 0) {
-                                        AddContact({login: candidate.login, messages: []})
+                                        AddContact({login: candidate.login})
                                     }
                                     setPageIndex(0)
                                 }}
