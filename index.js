@@ -3,17 +3,18 @@ const config = require('config')
 const path = require('path')
 const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
+require('dotenv').config()
 
-const db = config.get('db') || 'mongodb+srv://aleksey:messager2022@messager.noce0.mongodb.net/messager?retryWrites=true&w=majority'
+const db = config.get('db')
 
 mongoose.connect(
-    db, 
+    process.env.MONGO_URL, 
     { useUnifiedTopology: true, useNewUrlParser: true },
     () => console.log('Connected with DB')
 )
 
 // getting port
-const PORT = config.get('port') || 20022
+const PORT = process.env.PORT
 // create app on express
 const app = express()
 
