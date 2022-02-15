@@ -4,7 +4,7 @@
 
 .LoginPage{
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 60px);
     height: 1px;
     display: flex;
     justify-content: center;
