@@ -61,9 +61,6 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
             return res.json()
         }).then(data => {
             return setMessages(sortByDate(data.messages))
-        }).then(() => {
-            const box = MessagesBoxRef.current
-            box.scrollTop = box.scrollHeight - box.clientHeight
         })
     }, [activeChat.login])
 
@@ -90,6 +87,27 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
         }
     }, [])
 
+    // initial
+    useEffect(() => {
+        fetch('/message/get-by-login', {
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                user: localStorage.getItem('login'),
+                contact: activeChat.login
+            })
+        }).then(res => {
+            return res.json()
+        }).then(data => {
+            return setMessages(sortByDate(data.messages))
+        }).then(() => {
+            const box = MessagesBoxRef.current
+            box.scrollTop = box.scrollHeight
+        })
+    }, [])
+
     useEffect(() => {
         fetch('/message/read', {
             headers:{
@@ -104,12 +122,7 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
             })
         }).then(res => {
             return res.json()
-        }).then(data => {
-            console.log(data.response)
         })
-
-        const box = MessagesBoxRef.current
-        box.scrollTop = box.scrollHeight
     }, [messages])
 
     return (
@@ -165,6 +178,8 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
                         TextAreaRef.current.value = ''
                         setCurrentMessage('')
                         TextAreaRef.current.focus()
+                        const box = MessagesBoxRef.current
+                        box.scrollTop = box.scrollHeight
                     }}
                 >
                     <FontAwesomeIcon icon={faPaperPlane} className={styles.Icon} />
