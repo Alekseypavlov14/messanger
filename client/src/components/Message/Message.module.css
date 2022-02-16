@@ -33,3 +33,24 @@
 .outgoing{
     justify-content: end;
 }
+
+.data{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    color: #333;
+    font-size: 12px;
+    box-sizing: border-box;
+}
+
+.readBox{
+    margin-left: 5px;
+}
+
+.read{
+    color: rgb(21, 95, 21);
+}
+
+.unread{
+    color: lightgrey;
+}

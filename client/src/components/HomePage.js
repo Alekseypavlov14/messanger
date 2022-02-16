@@ -28,6 +28,9 @@ const HomePage = () => {
 
         const savedContacts = JSON.parse(localStorage.getItem('contacts'))
         setContacts(savedContacts)
+
+        // exit from site
+        return () => window.history.go(-1)
     }, [])
 
     useEffect(() => {

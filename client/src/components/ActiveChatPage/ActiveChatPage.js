@@ -64,13 +64,29 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
         }).then(() => {
             const box = MessagesBoxRef.current
             box.scrollTop = box.scrollHeight - box.clientHeight
-            console.dir(box)
         })
-    }, [])
+    }, [activeChat.login])
 
     useEffect(() => {
+        fetch('/message/read', {
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                messages: {
+                    from: activeChat.login,
+                    to: localStorage.getItem('login')
+                }
+            })
+        }).then(res => {
+            return res.json()
+        }).then(data => {
+            console.log(data.response)
+        })
+
         const box = MessagesBoxRef.current
-        box.scrollTop = box.scrollHeight - box.offsetHeight
+        box.scrollTop = box.scrollHeight
     }, [messages])
 
     return (

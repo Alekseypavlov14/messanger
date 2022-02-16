@@ -1,4 +1,4 @@
-const {Router} = require('express')
+const {Router, response} = require('express')
 const bodyParser = require('body-parser')
 const User = require('./../models/User')
 const Message = require('../models/Message')
@@ -62,6 +62,18 @@ router.post('/get-by-login', bodyParser.json(), async (req, res) => {
 
     res.json({
         messages: messages
+    })
+})
+
+router.post('/read', bodyParser.json(), async (req, res) => {
+    const data = req.body
+
+    const {to, from} = data.messages
+
+    const readMessages = await Message.updateMany({to: to, from: from}, {read: true})
+
+    res.json({
+        response: readMessages
     })
 })
 
