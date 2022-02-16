@@ -82,9 +82,6 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
                 return res.json()
             }).then(data => {
                 return setMessages(sortByDate(data.messages))
-            }).then(() => {
-                const box = MessagesBoxRef.current
-                box.scrollTop = box.scrollHeight - box.clientHeight
             })
         }, 1000)
 
@@ -167,6 +164,7 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
                         }]))
                         TextAreaRef.current.value = ''
                         setCurrentMessage('')
+                        TextAreaRef.current.focus()
                     }}
                 >
                     <FontAwesomeIcon icon={faPaperPlane} className={styles.Icon} />
