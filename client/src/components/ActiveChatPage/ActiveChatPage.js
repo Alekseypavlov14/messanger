@@ -61,12 +61,16 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
             return res.json()
         }).then(data => {
             return setMessages(sortByDate(data.messages))
+        }).then(() => {
+            const box = MessagesBoxRef.current
+            box.scrollTop = box.scrollHeight - box.clientHeight
+            console.dir(box)
         })
     }, [])
 
     useEffect(() => {
         const box = MessagesBoxRef.current
-        box.scrollTop = box.scrollHeight - box.clientHeight
+        box.scrollTop = box.scrollHeight - box.offsetHeight
     }, [messages])
 
     return (

@@ -6,7 +6,7 @@
     width: 100%;
     word-wrap: normal;
     display: flex;
-    margin-bottom: 20px;
+    margin: 10px 0px;
 }
 
 .message{
