@@ -31,4 +31,14 @@ router.post('/save', bodyParser.json(), async (req, res) => {
     })
 })
 
+router.post('/get-my-contacts', bodyParser.json(), async (req, res) => {
+    const data = req.body
+
+    const user = await User.findOne({login: data.login})
+
+    res.json({
+        contacts: user.contacts
+    })
+})
+
 module.exports = router
