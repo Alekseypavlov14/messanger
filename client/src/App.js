@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import LoginPage from './components/LoginPage'
 import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
@@ -13,6 +13,15 @@ function App() {
   function addNotify(message) {
     setNotifications(prev => prev.concat([message]))
   }
+
+  const [vh, setVh] = useState(window.innerHeight * 0.01)
+  window.addEventListener('resize', () => {
+    const newVh = window.innerHeight * 0.01
+    setVh(newVh)
+  })
+  useEffect(() => {
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+  }, [vh])
 
   return (
     <BrowserRouter>
