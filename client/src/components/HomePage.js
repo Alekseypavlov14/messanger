@@ -47,28 +47,6 @@ const HomePage = () => {
     }, [])
 
     useEffect(() => {
-        const reloader =  setInterval(() => {
-            fetch('/contacts/get-my-contacts', {
-                headers: { 
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    login: localStorage.getItem('login'),
-                })
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                return setContacts(data.contacts)
-            })
-        }, 1000)
-
-        return () => {
-            clearInterval(reloader)
-        }
-    }, [])
-
-    useEffect(() => {
         // check login and password
         const login = localStorage.getItem('login')
         const password = localStorage.getItem('password')

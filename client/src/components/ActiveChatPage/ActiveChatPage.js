@@ -88,7 +88,7 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
         return () => {
             clearInterval(reloader)
         }
-    })
+    }, [])
 
     useEffect(() => {
         fetch('/message/read', {
