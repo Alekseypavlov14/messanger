@@ -68,6 +68,32 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
     }, [activeChat.login])
 
     useEffect(() => {
+        const reloader = setInterval(() => {
+            fetch('/message/get-by-login', {
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    user: localStorage.getItem('login'),
+                    contact: activeChat.login
+                })
+            }).then(res => {
+                return res.json()
+            }).then(data => {
+                return setMessages(sortByDate(data.messages))
+            }).then(() => {
+                const box = MessagesBoxRef.current
+                box.scrollTop = box.scrollHeight - box.clientHeight
+            })
+        }, 1000)
+
+        return () => {
+            clearInterval(reloader)
+        }
+    })
+
+    useEffect(() => {
         fetch('/message/read', {
             headers:{
                 'Content-Type': 'application/json'
