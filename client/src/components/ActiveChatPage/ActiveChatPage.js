@@ -42,7 +42,7 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
 
         // console.log(dates)
 
-        return messages.sort((a, b) => a.time - b.time)
+        return messages.sort((a, b) => new Date(a.time) - new Date(b.time))
     }
 
     const [messages, setMessages] = useState([])
