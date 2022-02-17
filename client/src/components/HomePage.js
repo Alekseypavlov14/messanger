@@ -85,7 +85,7 @@ const HomePage = () => {
 
     // list of home pages
     const pages = [
-        (<MainPage setActiveChat={setActiveChat} removeContact={removeContact} setPageIndex={setPageIndex} contacts={contacts} />),
+        (<MainPage setContacts={setContacts} setActiveChat={setActiveChat} removeContact={removeContact} setPageIndex={setPageIndex} contacts={contacts} />),
         (<AddContactPage setPageIndex={setPageIndex} AddContact={AddContact} />),
         (<ActiveChatPage activeChat={activeChat} setPageIndex={setPageIndex} />)
     ]

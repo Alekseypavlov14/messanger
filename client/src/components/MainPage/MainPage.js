@@ -1,9 +1,30 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styles from './MainPage.module.css'
 import HomeHeader from './HomeHeader'
 import Contact from '../Contact/Contact'
 
-const MainPage = ({ setActiveChat, setPageIndex, contacts, removeContact }) => {
+const MainPage = ({ setContacts, setActiveChat, setPageIndex, contacts, removeContact }) => {
+    useEffect(() => {
+        const reloader = setInterval(() => {
+            fetch('/contacts/get-my', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    login: localStorage.getItem('login'),
+                })
+            }).then(res => {
+                return res.json()
+            }).then(data => {
+                setContacts(data.contacts)
+            })
+        }, 1000)
+        return () => {
+            clearInterval(reloader)
+        }
+    }, [])
+
     return (
         <div className={styles.MainPage}>
             <HomeHeader setPageIndex={setPageIndex} />
