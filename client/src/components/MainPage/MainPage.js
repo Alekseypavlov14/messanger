@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react'
 import styles from './MainPage.module.css'
-import HomeHeader from './HomeHeader'
 import Contact from '../Contact/Contact'
+import Header from '../Header/Header'
+import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 
 const MainPage = ({ setContacts, setActiveChat, setPageIndex, contacts, removeContact }) => {
     useEffect(() => {
@@ -27,7 +28,12 @@ const MainPage = ({ setContacts, setActiveChat, setPageIndex, contacts, removeCo
 
     return (
         <div className={styles.MainPage}>
-            <HomeHeader setPageIndex={setPageIndex} />
+            <Header 
+                title='Messager' 
+                active={() => setPageIndex(1)} 
+                icon={faMagnifyingGlass} 
+            />
+            
             <div className={styles.ContactsBox}>
                 {contacts.map((contact, index) => {
                     if(contact.login !== localStorage.getItem('login')) {

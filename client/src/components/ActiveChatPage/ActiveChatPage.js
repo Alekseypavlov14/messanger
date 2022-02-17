@@ -3,30 +3,27 @@ import styles from './ActiveChatPage.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import Message from '../Message/Message'
+import { sortByDate } from '../../api/sortMessagesByDate'
+import { request } from '../../api/request'
+import Header from '../Header/Header'
 
 const ActiveChatPage = ({ setPageIndex, activeChat }) => {
     const [currentMessage, setCurrentMessage] = useState('')
+    const [messages, setMessages] = useState([])
 
     const TextAreaRef = useRef(null)
     const MessagesBoxRef = useRef(null)
 
     function sendMessage() {
-        fetch('/message/send', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'Post',
-            body: JSON.stringify({
-                time: Date.now(),
-                from: localStorage.getItem('login'),
-                to: activeChat.login,
-                text: currentMessage,
-                read: false,
-                send: false
-            })
-        }).then(response => {
-            return response.json()
-        }).then(data => {
+        request('/message/send', {
+            time: Date.now(),
+            from: localStorage.getItem('login'),
+            to: activeChat.login,
+            text: currentMessage,
+            read: false,
+            send: false
+        })
+        .then(data => {
             if (data.isSaved) {
                 setMessages(prev => {
                     prev[prev.length - 1].send = true
@@ -36,48 +33,25 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
         })
     }
 
-    function sortByDate(messages) {
-        // const dates = messages.map(message => new Date(message.time))
-        // console.log(dates)
-
-        // console.log(dates)
-
-        return messages.sort((a, b) => new Date(a.time) - new Date(b.time))
-    }
-
-    const [messages, setMessages] = useState([])
-
     useEffect(() => {
-        fetch('/message/get-by-login', {
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
+        request('/message/get-by-login', {
+            user: localStorage.getItem('login'),
+            contact: activeChat.login
+        })
+        .then(data => {
+            return setMessages(sortByDate(data.messages))
+        })
+        .then(() => {
+            const box = MessagesBoxRef.current
+            box.scrollTop = box.scrollHeight
+        })
+
+        const reloader = setInterval(() => {
+            request('/message/get-by-login', {
                 user: localStorage.getItem('login'),
                 contact: activeChat.login
             })
-        }).then(res => {
-            return res.json()
-        }).then(data => {
-            return setMessages(sortByDate(data.messages))
-        })
-    }, [activeChat.login])
-
-    useEffect(() => {
-        const reloader = setInterval(() => {
-            fetch('/message/get-by-login', {
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    user: localStorage.getItem('login'),
-                    contact: activeChat.login
-                })
-            }).then(res => {
-                return res.json()
-            }).then(data => {
+            .then(data => {
                 return setMessages(sortByDate(data.messages))
             })
         }, 1000)
@@ -85,62 +59,24 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
         return () => {
             clearInterval(reloader)
         }
-    }, [])
-
-    // initial
-    useEffect(() => {
-        fetch('/message/get-by-login', {
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                user: localStorage.getItem('login'),
-                contact: activeChat.login
-            })
-        }).then(res => {
-            return res.json()
-        }).then(data => {
-            return setMessages(sortByDate(data.messages))
-        }).then(() => {
-            const box = MessagesBoxRef.current
-            box.scrollTop = box.scrollHeight
-        })
-    }, [])
+    }, [activeChat.login])
 
     useEffect(() => {
-        fetch('/message/read', {
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                messages: {
-                    from: activeChat.login,
-                    to: localStorage.getItem('login')
-                }
-            })
-        }).then(res => {
-            return res.json()
+        request('/message/read', {
+            messages: {
+                from: activeChat.login,
+                to: localStorage.getItem('login')
+            }
         })
     }, [messages])
 
     return (
         <div className={styles.ActiveChatPage}>
-            <header
-                className={styles.Header}
-            >
-                {activeChat.login}
-
-                <button 
-                    onClick={() => {
-                        setPageIndex(0)
-                    }}
-                    className={styles.ExitButton}
-                >
-                    <FontAwesomeIcon icon={faClose} />
-                </button>
-            </header>
+            <Header 
+                title={activeChat.login} 
+                active={() => {setPageIndex(0)}} 
+                icon={faClose} 
+            />
 
             <div className={styles.Messages} ref={MessagesBoxRef}>
                 {messages.map((message, index) => (
@@ -160,24 +96,30 @@ const ActiveChatPage = ({ setPageIndex, activeChat }) => {
 
                 <button
                     className={styles.Send}
-                    onClick={() => {
+                    onClick={async () => {
                         if (!(/\S/.test(currentMessage))) {
                             TextAreaRef.current.value = ''
                             setCurrentMessage('')
                             return
                         }
 
+                        // send to server
                         sendMessage()
-                        setMessages(prev => prev.concat([{
+                        // set on client
+                        await setMessages(prev => prev.concat([{
                             time: Date.now(),
                             from: localStorage.getItem('login'),
                             to: activeChat.login,
                             text: currentMessage,
                             read: false
                         }]))
+
+                        // clear textarea and focus on it
                         TextAreaRef.current.value = ''
                         setCurrentMessage('')
                         TextAreaRef.current.focus()
+                        
+                        // scroll to bottom
                         const box = MessagesBoxRef.current
                         box.scrollTop = box.scrollHeight
                     }}

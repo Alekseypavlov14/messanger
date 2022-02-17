@@ -2,27 +2,23 @@ import React from 'react'
 import styles from './Message.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { formatTime } from '../../api/formatTime'
 
 const Message = ({ message }) => {
-    const {to, from, text, time, read, send} = message
+    const {to, text, time, read} = message
 
     const status = to === localStorage.getItem('login') ? 'incoming' : 'outgoing'
 
-    const timeDate = new Date(time)
-    let hours = timeDate.getHours()
-    if (hours < 10) hours = '0' + hours
-    let minutes = timeDate.getMinutes()
-    if (minutes < 10) minutes = '0' + minutes
-
-    const timeFormat = `${hours}:${minutes}`
+    const messageTime = formatTime(time)
      
     return (
         <div className={styles.MessageBox + ' ' + styles[status]}>
             <div className={styles.message}>
                 {text}
+                
                 <div className={styles.data}>
                     <div className={styles.time}>
-                        {timeFormat}
+                        {messageTime}
                     </div>
                     
                     {status === 'outgoing' && (

@@ -8,10 +8,12 @@ const Contact = ({ contact, login, setPageIndex, removeContact, setActiveChat })
         <div 
             className={styles.Contact}
             onClick={(e) => {
-                if (e.target.tagName === 'DIV'){
-                    setActiveChat(contact)
-                    setPageIndex(2)
-                }
+                if (e.target.tagName !== 'DIV') return null
+                
+                setActiveChat(contact)
+                setPageIndex(2)
+                
+                console.dir(e.target)
             }}
         >
             { login }
