@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ActiveChatPage from './ActiveChatPage/ActiveChatPage'
 import AddContactPage from './AddContactPage/AddContactPage'
 import MainPage from './MainPage/MainPage'
+import { request } from './../api/request'
 
 const HomePage = () => {
     const navigate = useNavigate()
@@ -34,15 +35,9 @@ const HomePage = () => {
     }, [])
 
     useEffect(() => {
-        fetch('message/get', {
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                login: localStorage.getItem('login'),
-                password: localStorage.getItem('password')
-            })
+        request('message/get', {
+            login: localStorage.getItem('login'),
+            password: localStorage.getItem('password')
         })
     }, [])
 
@@ -57,15 +52,9 @@ const HomePage = () => {
         localStorage.setItem('contacts', JSON.stringify(contacts))
 
         // save all contacts on server
-        fetch('/contacts/save', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({
-                login: login,
-                contacts: contacts
-            })
+        request('/contacts/save', {
+            login: login,
+            contacts: contacts
         })
     }, [contacts])
 

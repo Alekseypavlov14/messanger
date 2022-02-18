@@ -3,20 +3,13 @@ import styles from './MainPage.module.css'
 import Contact from '../Contact/Contact'
 import Header from '../Header/Header'
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
+import { request } from '../../api/request'
 
 const MainPage = ({ setContacts, setActiveChat, setPageIndex, contacts, removeContact }) => {
     useEffect(() => {
         const reloader = setInterval(() => {
-            fetch('/contacts/get-my', {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    login: localStorage.getItem('login'),
-                })
-            }).then(res => {
-                return res.json()
+            request('/contacts/get-my', {
+                login: localStorage.getItem('login')
             }).then(data => {
                 setContacts(data.contacts)
             })
